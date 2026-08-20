@@ -37,11 +37,11 @@
 - [x] 包级 README + dev/cordis.yml
 - [x] 修 3 个类型错误（闭包收窄 / JsonValue 返回 / CPU 频率字段 MHz→GHz）
 
-## Wave 6：发布（复用《发布流程.md》SOP）
+## Wave 6：发布 ✅ 完成
 
-- [ ] 打 GitHub topic（仓库已有）
-- [ ] 1024Store 收录：目录 JSON → PR
-- [ ] （可选）`npm publish --access public`
+- [x] 打 GitHub topic（仓库已有）
+- [x] 1024Store 收录：目录 JSON → PR #127 → **自动合并**
+- [x] `npm publish --access public` → `@cqpdrcuk/dsh-plugin-hardware-benchmark@0.1.0`
 
 ## 出口校验
 
