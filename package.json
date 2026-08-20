@@ -7,7 +7,9 @@
     "typecheck": "pnpm -r typecheck",
     "build": "pnpm -r build",
     "smoke": "tsx packages/tool-npm-advisor/scripts/smoke.ts",
-    "load-test": "tsx packages/tool-npm-advisor/scripts/load-test.ts"
+    "smoke:hardware": "tsx packages/tool-hardware-benchmark/scripts/smoke.ts",
+    "load-test": "tsx packages/tool-npm-advisor/scripts/load-test.ts",
+    "load-test:hardware": "tsx packages/tool-hardware-benchmark/scripts/load-test.ts"
   },
   "devDependencies": {
     "tsx": "^4.19.0",

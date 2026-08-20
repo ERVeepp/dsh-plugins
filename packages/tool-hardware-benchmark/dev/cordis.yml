@@ -1,0 +1,15 @@
+# hardware-benchmark 开发挂载配置（DSH cordis.yml patch）
+
+把 `<ABS_PATH>` 换成 dsh-plugins 绝对路径后：
+
+```sh
+pnpm dsh web --patch ./dev/cordis.yml
+```
+
+> 发布后改用包名：`name: '@cqpdrcuk/dsh-plugin-hardware-benchmark'`。
+
+```yaml
+- insert:
+    - id: hardware-benchmark
+      name: '<ABS_PATH>/packages/tool-hardware-benchmark/src/index.ts'
+```

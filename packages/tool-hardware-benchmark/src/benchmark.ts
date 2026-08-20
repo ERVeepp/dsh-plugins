@@ -88,16 +88,17 @@ const GPU_GRADE: Array<[RegExp, number, string]> = [
 ]
 
 function gpuGameScore(p: HardwareProfile): { score: number; reason: string } {
-  if (!p.gpuModel) {
+  const model = p.gpuModel
+  if (!model) {
     return { score: 6, reason: '未检测到 GPU（可能是无头环境/虚拟机）' }
   }
-  const hit = GPU_GRADE.find(([re]) => re.test(p.gpuModel))
+  const hit = GPU_GRADE.find(([re]) => re.test(model))
   if (hit) {
     const [, base, label] = hit
     const vramBonus = p.gpuVramGB >= 16 ? 6 : p.gpuVramGB >= 8 ? 3 : 0
-    return { score: Math.min(60, base + vramBonus), reason: `${p.gpuModel}（显存 ${p.gpuVramGB}GB）：${label}${p.gpuVramGB >= 16 ? '，显存宽裕可开高画质' : ''}` }
+    return { score: Math.min(60, base + vramBonus), reason: `${model}（显存 ${p.gpuVramGB}GB）：${label}${p.gpuVramGB >= 16 ? '，显存宽裕可开高画质' : ''}` }
   }
-  return { score: 30, reason: `${p.gpuModel}（未收录型号，按中档预估）` }
+  return { score: 30, reason: `${model}（未收录型号，按中档预估）` }
 }
 
 function cpuGameScore(p: HardwareProfile): { score: number; reason: string } {

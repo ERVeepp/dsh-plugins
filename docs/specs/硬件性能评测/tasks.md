@@ -27,14 +27,15 @@
 - [x] 兼容性提示（电源瓦数 / 机箱长度 / 笔记本 / 主板平台）
 - [x] 排序：优先级优先 + 同优先级便宜在前
 
-## Wave 5：插件入口 + 验证（进行中）
+## Wave 5：插件入口 + 验证 ✅ 完成
 
-- [ ] `src/index.ts`：注册 `hardware_benchmark` 工具（描述说明价格用 web_search 查）
-- [ ] `scripts/smoke.ts`：mock 三档硬件（强开发机/游戏机/入门机）验证评分与升级建议
-- [ ] `scripts/load-test.ts`：Cordis 加载 + 工具注册
-- [ ] root package.json 加 smoke / load-test scripts
-- [ ] `pnpm typecheck` / `smoke` / `load-test` 全过
-- [ ] 包级 README + dev/cordis.yml
+- [x] `src/index.ts`：注册 `hardware_benchmark` 工具（描述说明价格用 web_search 查）
+- [x] `scripts/smoke.ts`：mock 三档硬件（强开发机/游戏机/入门机）验证评分与升级建议——全 OK
+- [x] `scripts/load-test.ts`：Cordis 加载 + `hardware_benchmark` 注册
+- [x] root package.json 加 `smoke:hardware` / `load-test:hardware`
+- [x] `pnpm typecheck`（两包）/ `smoke:hardware` / `load-test:hardware` 全过
+- [x] 包级 README + dev/cordis.yml
+- [x] 修 3 个类型错误（闭包收窄 / JsonValue 返回 / CPU 频率字段 MHz→GHz）
 
 ## Wave 6：发布（复用《发布流程.md》SOP）
 

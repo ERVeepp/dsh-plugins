@@ -15,6 +15,22 @@ importers:
         specifier: ^5.5.0
         version: 5.9.3
 
+  packages/tool-hardware-benchmark:
+    dependencies:
+      systeminformation:
+        specifier: ^5.27.0
+        version: 5.33.1
+    devDependencies:
+      '@deepseek-ai/cordis':
+        specifier: 4.0.1
+        version: 4.0.1
+      '@deepseek-ai/dsh-tools':
+        specifier: 0.1.0-rc.8
+        version: 0.1.0-rc.8(ac9081d1e007de8a90a707560a8ae1c3)
+      typescript:
+        specifier: ^5.5.0
+        version: 5.9.3
+
   packages/tool-npm-advisor:
     devDependencies:
       '@deepseek-ai/cordis':
@@ -321,6 +337,12 @@ packages:
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
 
+  systeminformation@5.33.1:
+    resolution: {integrity: sha512-DEN6ICHk3Tk0Uf/hrAHh7xlt7iL5CJFBtPZinA0H62DrGG/KPKqq/Nzj6lCXPS4Ay/sf/14zNnk9LpqKzBIc+w==}
+    engines: {node: '>=10.0.0'}
+    os: [darwin, linux, win32, freebsd, openbsd, netbsd, sunos, android]
+    hasBin: true
+
   tsx@4.23.12:
     resolution: {integrity: sha512-FDf4L4sYzKtzWYhU/Xm0AQFdTjdIxNo9ElTf2mxXM6k8YMHXzYUe4yODVaXP4V9uMFbVg8c0qyBccK2OOxb45Q==}
     engines: {node: '>=18.0.0'}
@@ -553,6 +575,8 @@ snapshots:
 
   fsevents@2.3.3:
     optional: true
+
+  systeminformation@5.33.1: {}
 
   tsx@4.23.12:
     dependencies:

@@ -30,7 +30,7 @@ export async function collectHardware(): Promise<HardwareProfile> {
     cpuModel: cpu?.brand?.trim() || 'unknown',
     cpuCores: cpu?.physicalCores || cpu?.cores || 0,
     cpuThreads: cpu?.cores || 0,
-    cpuSpeedGHz: cpu?.speedGHz ?? cpu?.speed ?? 0,
+    cpuSpeedGHz: cpu?.speed ? Number(cpu.speed) / 1000 : 0, // systeminformation speed 单位 MHz
     totalMemGB: Math.round((mem?.total ?? 0) / 1024 ** 3),
     memType: memLayout?.[0]?.type ?? null,
     diskType: (disk?.type as HardwareProfile['diskType']) ?? 'unknown',
