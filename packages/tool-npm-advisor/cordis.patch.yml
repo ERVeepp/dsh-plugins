@@ -1,0 +1,5 @@
+# npm-advisor bundle patch（DSH bundle 规范）
+# 插件行按包名引用：git/npm 安装后 Node 从 node_modules 解析到已安装代码
+- insert:
+    - id: npm-advisor
+      name: '@cqpdrcuk/dsh-plugin-npm-advisor'
