@@ -1,0 +1,13 @@
+{
+  "name": "dsh-plugins",
+  "version": "0.1.0",
+  "private": true,
+  "description": "DeepSeek Harness（DSH）第三方插件 Monorepo —— Everything is a Plugin",
+  "scripts": {
+    "typecheck": "pnpm -r typecheck",
+    "build": "pnpm -r build"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0"
+  }
+}

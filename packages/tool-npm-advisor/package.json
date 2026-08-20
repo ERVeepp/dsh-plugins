@@ -1,0 +1,30 @@
+{
+  "name": "@erveepp/dsh-plugin-npm-advisor",
+  "version": "0.1.0",
+  "description": "DSH 插件：npm 包引入前审查（原生替代 / 维护健康度 / README 迁移线索 / 依赖树可视化）",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": ">=4.0.1",
+    "@deepseek-ai/dsh-tools": ">=0.1.0-rc.0"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "4.0.1",
+    "@deepseek-ai/dsh-tools": "0.1.0-rc.8",
+    "typescript": "^5.5.0"
+  },
+  "keywords": [
+    "dsh",
+    "cordis",
+    "plugin",
+    "npm",
+    "dependency"
+  ],
+  "license": "MIT"
+}

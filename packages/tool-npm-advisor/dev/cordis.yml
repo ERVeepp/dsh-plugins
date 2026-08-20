@@ -1,0 +1,22 @@
+# npm-advisor 开发挂载配置（DSH cordis.yml patch）
+
+把下面的 `<ABS_PATH>` 换成你本机 dsh-plugins 的绝对路径，然后：
+
+```sh
+# 方式 A：有 dsh CLI
+pnpm dsh web --patch ./dev/cordis.yml
+
+# 方式 B：无 dsh CLI，先用官方 tutorial 的 loader 单测插件逻辑
+#   node --import tsx <dsh仓库>/vendor/cordis/bin.js   （配合本地 cordis.yml）
+```
+
+插件会注册两个模型可调用工具：`npm_package_audit` / `npm_dependency_tree`。
+
+> 注意：Cordis Loader 要求 entry 的 name 是绝对路径（官方文档明确要求）。
+> 发布后则改用包名：`name: '@erveepp/dsh-plugin-npm-advisor'`，由 DSH 从 npm 解析。
+
+```yaml
+- insert:
+    - id: npm-advisor
+      name: '<ABS_PATH>/packages/tool-npm-advisor/src/index.ts'
+```
