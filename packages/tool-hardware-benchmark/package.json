@@ -1,0 +1,39 @@
+{
+  "name": "@cqpdrcuk/dsh-plugin-hardware-benchmark",
+  "version": "0.1.0",
+  "description": "DSH 插件：读取本机硬件信息，从工程开发与游戏性能两个维度打分并给出建议",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "files": [
+    "src",
+    "cordis.patch.yml"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "dependencies": {
+    "systeminformation": "^5.27.0"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": ">=4.0.1",
+    "@deepseek-ai/dsh-tools": ">=0.1.0-rc.0"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "4.0.1",
+    "@deepseek-ai/dsh-tools": "0.1.0-rc.8",
+    "typescript": "^5.5.0"
+  },
+  "keywords": [
+    "dsh",
+    "cordis",
+    "plugin",
+    "hardware",
+    "benchmark"
+  ],
+  "license": "MIT"
+}

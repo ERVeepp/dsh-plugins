@@ -1,0 +1,4 @@
+# hardware-benchmark bundle patch（DSH bundle 规范）
+- insert:
+    - id: hardware-benchmark
+      name: '@cqpdrcuk/dsh-plugin-hardware-benchmark'
