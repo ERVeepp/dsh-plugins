@@ -9,20 +9,29 @@ DeepSeek Harness（DSH）第三方插件 Monorepo。
 
 ```
 packages/
-  tool-npm-advisor/   # npm 包引入前审查（第一个插件）
+  tool-npm-advisor/        # npm 包引入前审查（已收录 1024Store）
+  tool-hardware-benchmark/ # 硬件性能评测：开发/游戏双维打分 + 网络实测 + DIY 升级建议
+docs/
+  发布流程.md              # 发布 SOP（开发→topic→1024Store→npm）
+  specs/                   # 各插件 Spec-Kit Lite 三件套（requirements / design / tasks）
 ```
 
 ## 插件列表
 
-| 包 | 工具 | 说明 |
-|----|------|------|
-| `@cqpdrcuk/dsh-plugin-npm-advisor` | `npm_package_audit` / `npm_dependency_tree` | 引入新依赖前判断是否最优解：原生替代、维护健康度、README 迁移线索、依赖树 |
+| 包 | 工具 | 说明 | 状态 |
+|----|------|------|:---:|
+| `@cqpdrcuk/dsh-plugin-npm-advisor` | `npm_package_audit` / `npm_dependency_tree` | 引入新依赖前判断是否最优解：原生替代、维护健康度、README 迁移线索、依赖树 | ✅ 已收录 1024Store（PR #126） |
+| `@cqpdrcuk/dsh-plugin-hardware-benchmark` | `hardware_benchmark` | 读取本机硬件，工程开发 / 游戏性能双维打分 + 网络实测 + DIY 升级建议（推荐规格 + 实时查价搜索词） | 🔄 开发完成待发布 |
 
 ## 快速开始
 
 ```sh
-pnpm install          # 安装 workspace + 各包依赖
-pnpm typecheck        # 全仓库类型检查
+pnpm install            # 安装 workspace + 各包依赖
+pnpm typecheck          # 全仓库类型检查
+pnpm smoke              # npm-advisor 逻辑冒烟
+pnpm smoke:hardware     # 硬件评测 mock 冒烟（三档硬件）
+pnpm load-test          # Cordis 加载 + 工具注册（npm-advisor）
+pnpm load-test:hardware # Cordis 加载 + 工具注册（hardware-benchmark）
 ```
 
 ## 开发一个新插件
@@ -40,24 +49,31 @@ pnpm typecheck        # 全仓库类型检查
 pnpm dsh web --patch ./dev/cordis.yml
 ```
 
-## 发布到 npm（上官方线上）
+## 发布（上官方线上）
+
+完整流程见 [docs/发布流程.md](docs/发布流程.md)：开发验证 → GitHub topic → 1024Store 收录（PR 自动合并）→ npm publish。
+
+| 插件 | topic | 1024Store | npm |
+|------|:---:|:---:|:---:|
+| npm-advisor | ✅ | ✅ PR #126 | 待发 |
+| hardware-benchmark | ✅ | 待收录 | 待发 |
+
+npm 发布（可选但推荐，1024Store 会标 VERIFIED）：
 
 ```sh
-# 1. 确认 scope 是你的 npm 用户名 @cqpdrcuk（已配好）
-npm login
-# 2. 在插件包目录发布
-pnpm publish --access public
-# 3. 使用方（DSH 配置）改引包名：
-#    - id: npm-advisor
-#      name: '@cqpdrcuk/dsh-plugin-npm-advisor'
+npm login            # 账号 cqpdrcuk
+cd packages/<子包>
+npm publish --dry-run # 检查打包内容
+npm publish --access public
 ```
 
 发布前检查：
 
 - [ ] `peerDependencies` 版本范围正确（`@deepseek-ai/cordis` / `@deepseek-ai/dsh-tools`）
-- [ ] `files: ["src"]` 已包含全部源码（DSH 直接加载 TS，无需编译产物）
-- [ ] `pnpm typecheck` 通过
-- [ ] 已在本地 DSH 挂载冒烟验证过两个工具
+- [ ] `files` 已包含源码 + `cordis.patch.yml`（bundle 规范）
+- [ ] 包目录有自己的 `README.md`
+- [ ] `pnpm typecheck` / `smoke` / `load-test` 通过
+- [ ] 声明了 `dsh.bundle` 并提交 `cordis.patch.yml`
 
 ## 技术要点
 
