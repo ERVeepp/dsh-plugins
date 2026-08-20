@@ -1,2 +1,6 @@
 packages:
   - 'packages/*'
+
+# pnpm 11：构建脚本白名单（esbuild 是 tsx 的依赖，需要 postinstall 构建）
+allowBuilds:
+  esbuild: true

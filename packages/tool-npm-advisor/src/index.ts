@@ -7,14 +7,12 @@
  */
 import type { Context } from '@deepseek-ai/cordis'
 import { defineTool } from '@deepseek-ai/dsh-tools'
+import { renderDependencyTree } from './dependency-tree'
 import { findDeadPackage, findNativeAlternative } from './native'
-import { fetchDependencies, fetchPackage } from './registry'
+import { fetchPackage } from './registry'
 
 export const name = 'npm-advisor'
 export const inject = ['tools']
-
-const TREE_EDGE = (from: string, to: string) =>
-  `  ${from.replace(/\W/g, '_')} --> ${to.replace(/\W/g, '_')}`
 
 export function apply(ctx: Context) {
   // ── 工具 1：引入前审查 ────────────────────────────────────────────
@@ -53,21 +51,7 @@ export function apply(ctx: Context) {
       render: (_args, value) => [{ type: 'text', text: value }],
     },
     async execute(args) {
-      const seen = new Set<string>()
-      const lines: string[] = ['graph TD']
-      const walk = async (name: string, depth: number, from?: string) => {
-        if (seen.has(name) || depth <= 0) return
-        seen.add(name)
-        if (from) lines.push(TREE_EDGE(from, name))
-        try {
-          const deps = await fetchDependencies(name)
-          for (const dep of deps) await walk(dep, depth - 1, name)
-        } catch {
-          lines.push(TREE_EDGE(name, 'unknown'))
-        }
-      }
-      await walk(args.packageName, args.depth ?? 2)
-      return '```mermaid\n' + lines.join('\n') + '\n```'
+      return renderDependencyTree(args.packageName, args.depth ?? 2)
     },
   }))
 }
