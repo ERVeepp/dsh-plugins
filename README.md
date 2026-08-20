@@ -16,7 +16,7 @@ packages/
 
 | 包 | 工具 | 说明 |
 |----|------|------|
-| `@erveepp/dsh-plugin-npm-advisor` | `npm_package_audit` / `npm_dependency_tree` | 引入新依赖前判断是否最优解：原生替代、维护健康度、README 迁移线索、依赖树 |
+| `@cqpdrcuk/dsh-plugin-npm-advisor` | `npm_package_audit` / `npm_dependency_tree` | 引入新依赖前判断是否最优解：原生替代、维护健康度、README 迁移线索、依赖树 |
 
 ## 快速开始
 
@@ -43,13 +43,13 @@ pnpm dsh web --patch ./dev/cordis.yml
 ## 发布到 npm（上官方线上）
 
 ```sh
-# 1. 确认 scope 是你的 npm 用户名（当前默认 @erveepp，可在 package.json 修改）
+# 1. 确认 scope 是你的 npm 用户名 @cqpdrcuk（已配好）
 npm login
 # 2. 在插件包目录发布
 pnpm publish --access public
 # 3. 使用方（DSH 配置）改引包名：
 #    - id: npm-advisor
-#      name: '@erveepp/dsh-plugin-npm-advisor'
+#      name: '@cqpdrcuk/dsh-plugin-npm-advisor'
 ```
 
 发布前检查：
