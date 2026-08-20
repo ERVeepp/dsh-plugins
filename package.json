@@ -6,7 +6,8 @@
   "scripts": {
     "typecheck": "pnpm -r typecheck",
     "build": "pnpm -r build",
-    "smoke": "tsx packages/tool-npm-advisor/scripts/smoke.ts"
+    "smoke": "tsx packages/tool-npm-advisor/scripts/smoke.ts",
+    "load-test": "tsx packages/tool-npm-advisor/scripts/load-test.ts"
   },
   "devDependencies": {
     "tsx": "^4.19.0",
