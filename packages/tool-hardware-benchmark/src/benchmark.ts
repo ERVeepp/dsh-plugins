@@ -18,6 +18,8 @@ export interface HardwareProfile {
   diskTotalGB: number
   gpuModel: string | null
   gpuVramGB: number
+  /** 全部 GPU（含核显+独显），供展示/agent 判断；gpuModel 已是独显优先选中的最优 */
+  gpuList?: Array<{ model: string; vramGB: number }>
   networkType: 'ethernet' | 'wireless' | 'unknown'
   networkSpeedMbps: number | null  // 网卡标称速率
   downloadMbps: number | null      // 实测下载（Cloudflare 测速）
@@ -78,13 +80,14 @@ function diskDevScore(p: HardwareProfile): { score: number; reason: string } {
 
 /* ── 游戏分 ────────────────────────────────────────────── */
 
-/** 独显档位：关键词 → 分数档（0-60） */
+/** 独显档位：关键词 → 分数档（0-60），顺序即匹配优先级（Ti 要排在同系前） */
 const GPU_GRADE: Array<[RegExp, number, string]> = [
   [/RTX 5090|RTX 5080/, 60, '旗舰级独显'],
-  [/RTX 4090|RTX 4080|RX 7900|RTX 4070/, 52, '高端独显'],
+  [/RTX 5070 ?Ti/, 55, '高端独显'],
+  [/RTX 5070|RTX 4090|RTX 4080|RTX 4070|RX 7900/, 52, '高端独显'],
   [/RTX 4060|RTX 3070|RTX 3060|RX 7800|RX 6800/, 44, '中高端独显'],
   [/RTX 2060|RTX 2070|GTX 16|RX 6600|RX 580/, 36, '中端独显'],
-  [/GTX 10|GTX 9|UHD|HD Graphics|Iris|Radeon Graphics|Vega/, 18, '集成显卡/老独显'],
+  [/GTX 10|GTX 9|UHD|HD Graphics|Iris|Radeon Graphics|Vega|Radeon R?[0-9]+M/, 18, '集成显卡/老独显'],
 ]
 
 function gpuGameScore(p: HardwareProfile): { score: number; reason: string } {
@@ -161,9 +164,9 @@ export function benchmark(p: HardwareProfile): BenchmarkResult {
 
 /* ── 升级推荐（按短板，收益大的排前面） ──────────────────── */
 
-/** 是否独立显卡（排除集成/核显型号） */
+/** 是否独立显卡（排除集成/核显型号，含 Radeon XXXXM 核显模式） */
 function hasDiscreteGpu(p: HardwareProfile): boolean {
-  return p.gpuModel !== null && !/UHD|HD Graphics|Iris|Radeon Graphics|Vega/i.test(p.gpuModel)
+  return p.gpuModel !== null && !/UHD|HD Graphics|Iris|Radeon Graphics|Radeon R?[0-9]+M|Vega/i.test(p.gpuModel)
 }
 
 export function buildUpgrades(p: HardwareProfile): UpgradeItem[] {

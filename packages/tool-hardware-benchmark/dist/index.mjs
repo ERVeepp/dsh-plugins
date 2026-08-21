@@ -21,10 +21,11 @@ function diskDevScore(p) {
 }
 var GPU_GRADE = [
   [/RTX 5090|RTX 5080/, 60, "\u65D7\u8230\u7EA7\u72EC\u663E"],
-  [/RTX 4090|RTX 4080|RX 7900|RTX 4070/, 52, "\u9AD8\u7AEF\u72EC\u663E"],
+  [/RTX 5070 ?Ti/, 55, "\u9AD8\u7AEF\u72EC\u663E"],
+  [/RTX 5070|RTX 4090|RTX 4080|RTX 4070|RX 7900/, 52, "\u9AD8\u7AEF\u72EC\u663E"],
   [/RTX 4060|RTX 3070|RTX 3060|RX 7800|RX 6800/, 44, "\u4E2D\u9AD8\u7AEF\u72EC\u663E"],
   [/RTX 2060|RTX 2070|GTX 16|RX 6600|RX 580/, 36, "\u4E2D\u7AEF\u72EC\u663E"],
-  [/GTX 10|GTX 9|UHD|HD Graphics|Iris|Radeon Graphics|Vega/, 18, "\u96C6\u6210\u663E\u5361/\u8001\u72EC\u663E"]
+  [/GTX 10|GTX 9|UHD|HD Graphics|Iris|Radeon Graphics|Vega|Radeon R?[0-9]+M/, 18, "\u96C6\u6210\u663E\u5361/\u8001\u72EC\u663E"]
 ];
 function gpuGameScore(p) {
   const model = p.gpuModel;
@@ -82,7 +83,7 @@ function benchmark(p) {
   };
 }
 function hasDiscreteGpu(p) {
-  return p.gpuModel !== null && !/UHD|HD Graphics|Iris|Radeon Graphics|Vega/i.test(p.gpuModel);
+  return p.gpuModel !== null && !/UHD|HD Graphics|Iris|Radeon Graphics|Radeon R?[0-9]+M|Vega/i.test(p.gpuModel);
 }
 function buildUpgrades(p) {
   const list = [];
@@ -270,7 +271,10 @@ async function collectHardware() {
     safe(() => si.networkInterfaces()),
     safe(() => si.battery())
   ]);
-  const gpu = graphics?.controllers?.[0];
+  const gpus = graphics?.controllers ?? [];
+  const DISCRETE_RE = /UHD|HD Graphics|Iris|Radeon Graphics|Radeon R?[0-9]+M|Vega/i;
+  const discreteGpu = gpus.find((g) => g.model && !DISCRETE_RE.test(g.model));
+  const gpu = discreteGpu ?? gpus[0];
   const disk = disks?.[0];
   const net = nets?.find((n) => n.operstate === "up") ?? nets?.[0];
   const [downloadMbps, uploadMbps] = await Promise.all([measureDownload(), measureUpload()]);
@@ -287,6 +291,7 @@ async function collectHardware() {
     diskTotalGB: Math.round((disk?.size ?? 0) / 1024 ** 3),
     gpuModel: gpu?.model?.trim() || null,
     gpuVramGB: Math.round((gpu?.vram ?? 0) / 1024),
+    gpuList: gpus.map((g) => ({ model: g.model?.trim() || "unknown", vramGB: Math.round((g.vram ?? 0) / 1024) })),
     networkType: net?.type ?? "unknown",
     networkSpeedMbps: typeof net?.speed === "number" ? net.speed : null,
     downloadMbps,

@@ -18,7 +18,11 @@ export async function collectHardware(): Promise<HardwareProfile> {
     safe(() => si.battery()),
   ])
 
-  const gpu = graphics?.controllers?.[0]
+  const gpus = graphics?.controllers ?? []
+  // 独显优先：排除核显关键词（UHD / HD Graphics / Iris / Radeon Graphics / Radeon XXXXM / Vega），否则取第一个
+  const DISCRETE_RE = /UHD|HD Graphics|Iris|Radeon Graphics|Radeon R?[0-9]+M|Vega/i
+  const discreteGpu = gpus.find((g) => g.model && !DISCRETE_RE.test(g.model))
+  const gpu = discreteGpu ?? gpus[0]
   const disk = disks?.[0]
   const net = nets?.find((n) => n.operstate === 'up') ?? nets?.[0]
 
@@ -37,6 +41,7 @@ export async function collectHardware(): Promise<HardwareProfile> {
     diskTotalGB: Math.round((disk?.size ?? 0) / 1024 ** 3),
     gpuModel: gpu?.model?.trim() || null,
     gpuVramGB: Math.round((gpu?.vram ?? 0) / 1024),
+    gpuList: gpus.map((g) => ({ model: g.model?.trim() || 'unknown', vramGB: Math.round((g.vram ?? 0) / 1024) })),
     networkType: (net?.type as HardwareProfile['networkType']) ?? 'unknown',
     networkSpeedMbps: typeof net?.speed === 'number' ? net.speed : null,
     downloadMbps,
