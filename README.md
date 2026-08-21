@@ -20,8 +20,8 @@ docs/
 
 | 包 | 工具 | 说明 | 状态 |
 |----|------|------|:---:|
-| `@cqpdrcuk/dsh-plugin-npm-advisor` | `npm_package_audit` / `npm_dependency_tree` | 引入新依赖前判断是否最优解：原生替代、维护健康度、README 迁移线索、依赖树 | ✅ 已收录 1024Store + npm 0.1.0 |
-| `@cqpdrcuk/dsh-plugin-hardware-benchmark` | `hardware_benchmark` | 读取本机硬件，工程开发 / 游戏性能双维打分 + 网络实测 + DIY 升级建议（推荐规格 + 实时查价搜索词） | ✅ 已收录 1024Store + npm 0.1.0 |
+| `@cqpdrcuk/dsh-plugin-npm-advisor` | `npm_package_audit` / `npm_dependency_tree` | 引入新依赖前判断是否最优解：原生替代、维护健康度、README 迁移线索、依赖树 | ✅ 已收录 1024Store + npm 0.1.1 |
+| `@cqpdrcuk/dsh-plugin-hardware-benchmark` | `hardware_benchmark` | 读取本机硬件，工程开发 / 游戏性能双维打分 + 网络实测 + DIY 升级建议（推荐规格 + 实时查价搜索词） | ✅ 已收录 1024Store + npm 0.1.1 |
 
 ## 快速开始
 
@@ -55,8 +55,8 @@ pnpm dsh web --patch ./dev/cordis.yml
 
 | 插件 | topic | 1024Store | npm |
 |------|:---:|:---:|:---:|
-| npm-advisor | ✅ | ✅ PR #126 | ✅ 0.1.0 |
-| hardware-benchmark | ✅ | ✅ PR #127 | ✅ 0.1.0 |
+| npm-advisor | ✅ | ✅ PR #126 | ✅ 0.1.1 |
+| hardware-benchmark | ✅ | ✅ PR #127 | ✅ 0.1.1 |
 
 npm 发布（可选但推荐，1024Store 会标 VERIFIED）：
 
