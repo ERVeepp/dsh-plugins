@@ -1,11 +1,11 @@
 {
   "name": "@cqpdrcuk/dsh-plugin-npm-advisor",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "DSH 插件：npm 包引入前审查（原生替代 / 维护健康度 / README 迁移线索 / 依赖树可视化）",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
+  "main": "dist/index.mjs",
+  "types": "dist/index.d.mts",
   "files": [
-    "src",
+    "dist",
     "cordis.patch.yml"
   ],
   "dsh": {
@@ -14,7 +14,8 @@
     }
   },
   "scripts": {
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build": "tsup src/index.ts --format esm --dts --out-dir dist --clean"
   },
   "peerDependencies": {
     "@deepseek-ai/cordis": ">=4.0.1",
@@ -23,6 +24,7 @@
   "devDependencies": {
     "@deepseek-ai/cordis": "4.0.1",
     "@deepseek-ai/dsh-tools": "0.1.0-rc.8",
+    "tsup": "^8.0.0",
     "typescript": "^5.5.0"
   },
   "keywords": [

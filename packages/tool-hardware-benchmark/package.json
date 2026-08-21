@@ -1,11 +1,11 @@
 {
   "name": "@cqpdrcuk/dsh-plugin-hardware-benchmark",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "DSH 插件：读取本机硬件信息，从工程开发与游戏性能两个维度打分并给出建议",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
+  "main": "dist/index.mjs",
+  "types": "dist/index.d.mts",
   "files": [
-    "src",
+    "dist",
     "cordis.patch.yml"
   ],
   "dsh": {
@@ -17,7 +17,8 @@
     "systeminformation": "^5.27.0"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build": "tsup src/index.ts --format esm --dts --out-dir dist --clean"
   },
   "peerDependencies": {
     "@deepseek-ai/cordis": ">=4.0.1",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@deepseek-ai/cordis": "4.0.1",
     "@deepseek-ai/dsh-tools": "0.1.0-rc.8",
+    "tsup": "^8.0.0",
     "typescript": "^5.5.0"
   },
   "keywords": [
